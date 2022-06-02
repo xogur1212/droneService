@@ -1,0 +1,21 @@
+@startuml
+
+title 드론 서비스
+
+object 유저
+object 드론
+
+object 미션
+object 비행
+
+object 로그
+object 인증
+
+object 공지사항
+object 게시판
+
+
+
+
+
+@enduml

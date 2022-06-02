@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/2.3.4/stomp.min.js"></script>
+</head>
+<body>
+<table th:border="1" class="mission">
+    <tr>
+        <th>mission id</th>
+        <td><input type="text" id="mission_id" name="mission_id"></td>
+
+    </tr>
+
+    <button id="connect">connect & subscribe</button>
+    <button id="logging">logging</button>
+    <button id="start">mission start</button>
+    <button id="return">return</button>
+    <button id="waypoint">경유지</button>
+    <button id="arm">arm</button>
+    <button id="disarm">disarm</button>
+</table>
+
+</body>
+
+
+<script>
+
+
+    let i = 0;
+    let mission_id = 0;
+
+    $("#waypoint").on("click", function () {
+
+        mission_id = $("#mission_id").val();
+
+
+        stompClient.send("/app/waypoint", {}, JSON.stringify({
+            'droneId': mission_id,
+            'gpsX': 126.9005227,
+            'gpsY': 37.4452554,
+            'alt': 150,
+            'yaw': 120
+        }));
+    })
+
+
+
+
+    $("#arm").on("click", function () {
+        mission_id = $("#mission_id").val();
+
+        if (mission_id === "") {
+            alert("미션아이디를 입력하세요");
+        } else {
+            stompClient.send("/app/arm", {}, JSON.stringify({'droneId': mission_id}));
+        }
+    })
+    $("#disarm").on("click", function () {
+        stompClient.send("/app/disarm", {}, JSON.stringify({'droneId': 141}));
+    })
+    $("#setmissioncurrent").on("click", function () {
+        stompClient.send("/app/setmissioncurrent", {}, JSON.stringify({'seq': 4}));
+    })
+    $("#play").on("click", function () {
+        stompClient.send("/app/play", {}, JSON.stringify({'droneId': 0}));
+    });
+
+
+    $("#pause").on("click", function () {
+        stompClient.send("/app/pause", {}, JSON.stringify({'droneId': 0}));
+    })
+
+    $("#return").on("click", function () {
+        if (mission_id === "") {
+            alert("미션아이디를 입력하세요");
+        } else {
+            stompClient.send("/app/return", {}, JSON.stringify({'droneId': mission_id}));
+        }
+    });
+
+    $("#logging").on("click", function () {
+        mission_id = $("#mission_id").val();
+
+        if (mission_id === "") {
+            alert("미션아이디를 입력하세요");
+        } else {
+            stompClient.send("/app/logging", {}, JSON.stringify({'droneId': mission_id}));
+        }
+    })
+
+    function connect() {
+        let socket = new SockJS('ws');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+
+
+            stompClient.subscribe('/topic/arm', function (drone) {
+
+            });
+            stompClient.subscribe('/topic/disarm', function (drone) {
+
+            });
+
+            stompClient.subscribe('/topic/logging', function (drone) {
+
+            });
+
+            stompClient.subscribe('/topic/start-mission', function (drone) {
+            });
+            stompClient.subscribe('/topic/log', function (drone) {
+
+            });
+            stompClient.subscribe('/topic/pause', function (drone) {
+
+            });
+            stompClient.subscribe('/topic/play', function (drone) {
+
+            })
+
+            stompClient.subscribe('/topic/return', function (drone) {
+            })
+
+            stompClient.subscribe('/topic/set-mission-current', function (drone) {
+
+            })
+            stompClient.subscribe('/topic/waypoint', function (drone) {
+
+            })
+
+
+        });
+
+    }
+
+
+    function droneMission() {
+
+        mission_id = $("#mission_id").val();
+
+        if (mission_id === "") {
+            alert("미션아이디를 입력하세요");
+        } else {
+            stompClient.send("/app/start-mission", {}, JSON.stringify({'droneId': mission_id}));
+        }
+
+
+    }
+
+
+
+
+    $("#connect").click(function () {
+        connect();
+    });
+    $("#start").click(function () {
+        droneMission();
+    });
+
+
+
+</script>
+</html>
