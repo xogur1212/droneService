@@ -24,9 +24,9 @@ import java.util.*;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class ConnectionService implements IConnectionService{
+public class ConnectionService implements IConnectionService {
 
-    private final DroneSocketService droneSocketService;
+    private final IDroneSocketService droneSocketService;
     private final CustomServerSocket ServerSocket;
     private final MapManager mapManager;
     Map<String, Object> connectionMap = new HashMap<>();
@@ -75,6 +75,7 @@ public class ConnectionService implements IConnectionService{
 
         return systemIdConnectionMap;
     }
+
     @Override
     public MavlinkConnection connect(Socket socket) {
 
@@ -87,6 +88,7 @@ public class ConnectionService implements IConnectionService{
         }
         return connection;
     }
+
     @Override
     public int isConnected(MavlinkConnection connection) {
 
@@ -116,7 +118,6 @@ public class ConnectionService implements IConnectionService{
 
             connection.send2(0, 0, firstHeartbeat, linkId, timestamp, secretKey);
             t.schedule(tt, 0, 1000);
-
 
 
             while (timeSec[0] < 3) {
