@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @Setter
 @EqualsAndHashCode
 @DynamicUpdate
+@Builder
 public class Drone {
 
     @Id
