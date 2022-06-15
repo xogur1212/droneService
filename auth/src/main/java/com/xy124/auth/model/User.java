@@ -53,17 +53,22 @@ public class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss", timezone = "Asia/Seoul")
     @Column(name = "insert_dt")
     private Timestamp insertDt;
+
+    @Column(name = "update_user_seq")
+    private Long updateUserSeq;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss", timezone = "Asia/Seoul")
     @Column(name = "update_dt")
     private Timestamp updateDt;
 
     private String status;
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     @OneToOne
     @JoinColumn(name = "status", referencedColumnName = "code_value", insertable = false, updatable = false)
     private UserStatus userStatus;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserInGroup> userInGroup = new ArrayList<>();
 
 }

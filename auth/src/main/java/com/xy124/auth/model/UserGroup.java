@@ -52,7 +52,7 @@ public class UserGroup {
     @JsonIgnore
     private final List<UserInGroup> userInGroup =new ArrayList<>();
 
-    @OneToMany(mappedBy = "userGroup2", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userGroup2", cascade = CascadeType.ALL)
     private final List<UserGroupPermit> userGroupPermit = new ArrayList<>();
 
 //    @OneToOne
