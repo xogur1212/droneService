@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -31,18 +33,9 @@ public class UserController {
                 .body(result);
     }
 
-/**
-    @GetMapping("/check/authority/{authName}/{permit}")
-    public ResponseEntity<?> checkAuthority(@PathVariable String authName, @PathVariable String permit) {
-        return  ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userService.checkAuthority(authName, permit));
-    }
-    */
-//추가해야될 내용 위에
 
     @GetMapping("/{userSeq}")
-    public ResponseEntity<?> findOneUser(@PathVariable Long userSeq){
+    public ResponseEntity<?> findOneUser(@PathVariable Long userSeq) {
 
 
         return ResponseEntity
@@ -50,14 +43,35 @@ public class UserController {
                 .body(userService.findOneUser(userSeq));
     }
 
+    /**
+     * @param user user_status 에 먼저 데이터가 있어야 한다!
+     *             {
+     *             "userId":"manager92",
+     *             "password":"123",
+     *             "email":"xogur1212@naver.com",
+     *             "tel":"01032707784",
+     *             "address":"독산",
+     *             "status":0,
+     *             "detailAddress":"집",
+     *             "insertUserSeq":"5",
+     *             "userName":"엄태혁"
+     *             }
+     * @return 성공 실패에 따른 result code & message
+     */
     @PutMapping
-    public ResponseEntity<?> saveUser(@RequestBody User user){
+    public ResponseEntity<?> saveUser(@RequestBody User user) {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.saveUser(user));
     }
 
+    @PatchMapping()
+    public ResponseEntity<?> updateUser(@RequestBody Map<String, Object> paramMap) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.updateUser(paramMap));
+    }
 
 
 }

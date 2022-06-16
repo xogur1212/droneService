@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name ="user_status")
@@ -17,8 +18,8 @@ import javax.persistence.Table;
 @Setter
 @EqualsAndHashCode
 @DynamicUpdate
-public class UserStatus {
-
+public class UserStatus implements Serializable {
+//TODO Serialzable 을 붙이는 정확한 이유가 알고 싶음
     @Id
     @Column(name ="code_id")
     private String codeId;

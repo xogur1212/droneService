@@ -4,6 +4,8 @@ import com.xy124.auth.model.User;
 import com.xy124.auth.model.dto.Result;
 import com.xy124.auth.model.dto.response.UserResponse;
 
+import java.util.Map;
+
 public interface IUserService {
 
     UserResponse findUser(String userName);
@@ -17,7 +19,9 @@ public interface IUserService {
 
     User findUserWithPassword(String username);
 
-    User findOneUser(Long userSeq);
+    UserResponse findOneUser(Long userSeq);
 
     Result saveUser(User user);
+
+    Result updateUser(Map<String, Object> paramMap);
 }

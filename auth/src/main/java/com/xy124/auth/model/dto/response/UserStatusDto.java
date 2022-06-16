@@ -12,6 +12,7 @@ public class UserStatusDto {
     private int codeValue;
 
     public UserStatusDto(UserStatus userStatus) {
+        this.codeId =userStatus.getCodeId();
         this.codeName = userStatus.getCodeName();
         this.codeValue = Integer.parseInt(userStatus.getCodeValue());
     }
