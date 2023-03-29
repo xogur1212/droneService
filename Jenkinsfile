@@ -1,27 +1,21 @@
 pipeline {
-  agent any
-  tools {
-    maven 'M3'
-  }
+    agent any
 
-  stages {
-
-    stage('Checkout Application Git Branch') {
-        steps {
-            git url: 'https://github.com/xogur1212/droneService.git',
-                branch: 'main'
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
         }
-        post {
-                failure {
-                  echo 'Repository clone failure !'
-                }
-                success {
-                  echo 'Repository clone success !'
-                }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
         }
     }
-
-  }
-
 }
-
